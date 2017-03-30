@@ -77,6 +77,11 @@ namespace WebApplication_StartupSeed_v2.Controllers
         [ResponseType(typeof(Animais))]
         public IHttpActionResult PostAnimais(Animais animais)
         {
+            animais.AnimalID = int.Parse(db.Animais
+                            .OrderByDescending(p => p.AnimalID)
+                            .Select(r => r.AnimalID)
+                            .First().ToString()) + 1;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -92,7 +97,7 @@ namespace WebApplication_StartupSeed_v2.Controllers
                 int imgNum = rng.Next(0, 10);
 
                 String filename = DateTime.Now.ToString("yyyyMMddHHmmssffff") + "_" + imgNum + ".jpg";
-                string fullSavePath = HttpContext.Current.Server.MapPath("~/Imagens/" + filename + ".jpg");
+                string fullSavePath = HttpContext.Current.Server.MapPath("~/Imagens/" + filename);
 
                 File.WriteAllBytes(fullSavePath, Convert.FromBase64String(animais.Imagem));
                 animais.Imagem = filename;
