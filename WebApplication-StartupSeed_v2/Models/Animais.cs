@@ -28,7 +28,6 @@ namespace WebApplication_StartupSeed_v2.Models {
 
 		public float? Altura { get; set; }
 
-        [StringLength(500)]
         public string Imagem { get; set; }
         public DateTime Data { get; set; }
 
